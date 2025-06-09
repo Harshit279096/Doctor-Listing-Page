@@ -1,0 +1,99 @@
+.about-page {
+  padding: 2rem;
+  background-color: #f9fbff;
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+}
+
+/* Hero Section */
+.hero1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.hero1 .text {
+  flex: 1;
+}
+
+.hero1 h1 {
+  font-size: 2.5rem;
+  color: #003366;
+}
+
+.hero1 p {
+  font-size: 1.2rem;
+  margin-top: 1rem;
+}
+
+.hero1-img {
+  width: 300px;
+  max-width: 100%;
+}
+
+/* Features Section */
+.features1 {
+  margin-top: 4rem;
+}
+
+.features1 h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #003366;
+}
+
+.feature-grid {
+  display: flex;
+  justify-content: space-around;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.feature-card {
+  background-color: rgb(135, 135, 220);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  width: 280px;
+  box-shadow: 0 4px 10px rgba(173, 170, 170, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+}
+
+.feature-card img {
+  width: 60px;
+  margin-bottom: 1rem;
+}
+
+/* How It Works Section */
+.how-it-works {
+  padding: 4rem 2rem;
+  background-color: #f9f9f9;
+}
+
+.how-it-works-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.how-it-works-content .text {
+  flex: 1;
+  min-width: 400px;
+  max-width: 600px;
+  font-size: xx-large;
+}
+
+.how-it-works-content .how-img {
+  flex: 1;
+  max-width: 5000px;
+  width: 100%;
+  min-width: 300px;
+}

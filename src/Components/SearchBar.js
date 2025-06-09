@@ -1,12 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 const SearchBar = ({ value, onChange, doctors }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const searchRef = useRef(null);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
-    // Handle clicks outside the search component
     const handleClickOutside = (event) => {
       if (searchRef.current && !searchRef.current.contains(event.target)) {
         setShowSuggestions(false);
@@ -14,49 +17,48 @@ const SearchBar = ({ value, onChange, doctors }) => {
     };
 
     document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleInputChange = (e) => {
-    const inputValue = e.target.value;
-    onChange(inputValue); // Pass the value directly as expected by App.js
-    
+  useEffect(() => {
+    const inputValue = value.trim().toLowerCase();
+
     if (inputValue.length > 0) {
-      // Find doctors matching by name
-      const doctorsByName = doctors.filter(doctor => 
-        doctor.name.toLowerCase().includes(inputValue.toLowerCase())
+      // Match by name
+      const byName = doctors.filter((doc) =>
+        doc.name.toLowerCase().includes(inputValue)
       );
-      
-      // Find doctors matching by specialty
-      const doctorsBySpecialty = doctors.filter(doctor => 
-        doctor.specialities.some(spec => 
-          spec.name.toLowerCase().includes(inputValue.toLowerCase())
+
+      // Match by specialty (exact case-insensitive match)
+      const bySpecialty = doctors.filter((doc) =>
+        (doc.specialities || []).some((spec) =>
+          spec.name.toLowerCase() === inputValue
         )
       );
-      
-      // Combine and remove duplicates
-      const combinedResults = [...doctorsByName];
-      
-      doctorsBySpecialty.forEach(doctor => {
-        if (!combinedResults.some(d => d.id === doctor.id)) {
-          combinedResults.push(doctor);
+
+      // Combine unique results
+      const combined = [...byName];
+      bySpecialty.forEach((doc) => {
+        if (!combined.find((d) => d.id === doc.id)) {
+          combined.push(doc);
         }
       });
-      
-      // Take top results for suggestions
-      setSuggestions(combinedResults.slice(0, 5));
+
+      setSuggestions(combined.slice(0, 5));
       setShowSuggestions(true);
     } else {
       setSuggestions([]);
       setShowSuggestions(false);
     }
+  }, [value, doctors]);
+
+  const handleInputChange = (e) => {
+    onChange(e.target.value);
   };
 
   const handleSuggestionClick = (doctor) => {
-    onChange(doctor.name); // Pass the value directly as expected by App.js
     setShowSuggestions(false);
+    navigate(`/doctor/${doctor.id}`); // ✅ Redirect to doctor page
   };
 
   const handleKeyDown = (e) => {
@@ -65,11 +67,12 @@ const SearchBar = ({ value, onChange, doctors }) => {
     }
   };
 
-  // Extract all unique specialties from doctors for search help text
   const allSpecialties = Array.from(
-    new Set(doctors.flatMap(doctor => 
-      doctor.specialities.map(spec => spec.name)
-    ))
+    new Set(
+      doctors.flatMap((doctor) =>
+        (doctor.specialities || []).map((spec) => spec.name)
+      )
+    )
   ).filter(Boolean).slice(0, 3);
 
   return (
@@ -81,38 +84,42 @@ const SearchBar = ({ value, onChange, doctors }) => {
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
           onFocus={() => value.length > 0 && setShowSuggestions(true)}
-          placeholder={`Search by doctor name, specialty (e.g., ${allSpecialties.join(', ')})`}
-          data-testid="autocomplete-input"
+          placeholder={`Search by name or specialty (e.g., ${allSpecialties.join(', ')})`}
         />
         <i className="fas fa-search search-icon"></i>
-        
+
         {showSuggestions && suggestions.length > 0 && (
           <div className="suggestions-dropdown">
-            {suggestions.map((doctor, index) => (
+            {suggestions.map((doctor) => (
               <div
-                key={index}
+                key={doctor.id}
                 className="suggestion-item"
-                data-testid="suggestion-item"
                 onClick={() => handleSuggestionClick(doctor)}
               >
-                <img 
-                  src={doctor.photo} 
-                  alt={doctor.name} 
+                <img
+                  src={doctor.photo}
+                  alt={doctor.name}
                   className="suggestion-photo"
                   onError={(e) => {
-                    e.target.onerror = null; 
+                    e.target.onerror = null;
                     e.target.src = 'https://via.placeholder.com/50';
                   }}
                 />
                 <div className="suggestion-info">
                   <div className="suggestion-name">{doctor.name}</div>
                   <div className="suggestion-specialty">
-                    {doctor.specialities.map(spec => spec.name).join(', ') || 'General Physician'}
+                    {(doctor.specialities || [])
+                      .map((spec) => spec.name)
+                      .join(', ') || 'General Physician'}
                   </div>
                 </div>
               </div>
             ))}
           </div>
+        )}
+
+        {showSuggestions && suggestions.length === 0 && (
+          <div className="no-results">No doctor found</div>
         )}
       </div>
       <div className="search-help">

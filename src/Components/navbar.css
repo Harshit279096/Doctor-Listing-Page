@@ -1,0 +1,139 @@
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #003366;
+  color: #ffffff;
+  padding: 1rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+/* Logo styles */
+.logo span {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.logo .highlight {
+  color: #00bfff; /* Light blue */
+}
+
+/* Nav links */
+.nav-links {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: white;
+  padding: 6px 16px;
+  border-radius: 999px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-link:hover {
+  background-color: #005999;
+}
+
+/* Active link */
+.nav-link.active {
+  background-color: white;
+  color: #003366;
+}
+
+/* Responsive design */
+/* Mobile Responsive Navbar */
+@media (max-width: 768px) {
+  .hamburger-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 25px;
+    height: 20px;
+    cursor: pointer;
+    z-index: 1001;
+  }
+
+  .hamburger-icon span {
+    height: 3px;
+    width: 100%;
+    background-color: white;
+    border-radius: 2px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .hamburger-icon.open span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .hamburger-icon.open span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger-icon.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background-color: #003366;
+    width: 100%;
+    padding: 1rem 0;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    z-index: 1000;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .nav-links a,
+  .nav-links button {
+    color: white;
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+  }
+
+  .nav-links button.find-doctor-btn {
+    color: white;
+    border: 2px solid white;
+    padding: 0.4rem 1rem;
+    border-radius: 8px;
+  }
+
+  .nav-links button.find-doctor-btn:hover {
+    background-color: #007bff;
+    color: white;
+  }
+}
+

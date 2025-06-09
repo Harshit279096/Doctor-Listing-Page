@@ -510,9 +510,9 @@ body {
 /* Booking Modal */
 .modal-overlay {
   position: fixed;
+  top: 0;
   left: 0;
   right: 0;
-  top: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.6);
   display: flex;
@@ -529,7 +529,7 @@ body {
   max-width: 600px;
   max-height: 90vh;
   overflow-y: auto;
-  position: relative;
+  position:fixed;
   animation: modalFadeIn 0.3s ease-out;
 }
 
@@ -799,91 +799,6 @@ margin-bottom: 3px;
 font-size: 0.9rem;
 color: #666;
 }
-.pagination {
-  display: flex;
-  justify-content: center;  /* horizontal center */
-  align-items: center;      /* vertical center */
-  margin: 1.5rem auto;
-  margin-left: 220%;     /* vertical spacing and center horizontally */
-  gap: 1rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  width: fit-content;       /* shrink container to content width */
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  background-color: #f0f4ff; /* subtle background for visibility */
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-
-
-.pagination button {
-  background-color: #2785e3;
-  border: none;
-  color: white;
-  padding: 0.5rem 1.25rem;
-  border-radius: 5px;
-  cursor: pointer;
-  position: relative;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
-}
-
-.pagination button:hover:not(:disabled) {
-  background-color: #0f5bb5;
-}
-
-.pagination button:disabled {
-  background-color: #999999;
-  cursor: not-allowed;
-}
-
-.pagination span {
-  font-size: 1rem;
-  color: #003366;
-  font-weight: 600;
-}
-
-
-.time-slots-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 5px;
-}
-
-.time-slot-btn {
-  padding: 8px 14px;
-  border: 1.5px solid #2785e3;
-  background-color: white;
-  color: #2785e3;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  user-select: none;
-}
-
-.time-slot-btn.selected {
-  background-color: #2785e3;
-  color: white;
-}
-
-.time-slot-btn:hover:not(:disabled) {
-  background-color: #0f5bb5;
-  color: white;
-}
-
-.time-slot-btn:disabled {
-  background-color: #ccc;
-  border-color: #aaa;
-  cursor: not-allowed;
-}
-
-.info-text {
-  font-size: 0.9rem;
-  color: #555;
-  margin-top: 4px;
-}
-
 /* Responsive Design */
 @media (max-width: 768px) {
   .container {
