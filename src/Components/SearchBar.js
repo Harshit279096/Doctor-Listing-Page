@@ -36,9 +36,25 @@ const SearchBar = ({ value, onChange, doctors }) => {
         )
       );
 
-      // Combine unique results
+      // Match by specialty starting letter (for single character searches)
+      const bySpecialtyStartingLetter = doctors.filter((doc) =>
+        (doc.specialities || []).some((spec) =>
+          spec.name.toLowerCase().startsWith(inputValue)
+        )
+      );
+
+      // Combine unique results with priority: exact name match, exact specialty match, then starting letter match
       const combined = [...byName];
+      
+      // Add exact specialty matches
       bySpecialty.forEach((doc) => {
+        if (!combined.find((d) => d.id === doc.id)) {
+          combined.push(doc);
+        }
+      });
+
+      // Add starting letter matches
+      bySpecialtyStartingLetter.forEach((doc) => {
         if (!combined.find((d) => d.id === doc.id)) {
           combined.push(doc);
         }
@@ -84,7 +100,7 @@ const SearchBar = ({ value, onChange, doctors }) => {
           onChange={handleInputChange}
           onKeyDown={handleKeyDown}
           onFocus={() => value.length > 0 && setShowSuggestions(true)}
-          placeholder={`Search by name or specialty (e.g., ${allSpecialties.join(', ')})`}
+          placeholder={`Search by name, specialty, or first letter (e.g.,Gynaecologist, ${allSpecialties.join(', ')})`}
         />
         <i className="fas fa-search search-icon"></i>
 
@@ -123,7 +139,7 @@ const SearchBar = ({ value, onChange, doctors }) => {
         )}
       </div>
       <div className="search-help">
-        Try searching by doctor name or medical specialty
+        Try searching by doctor name, medical specialty, or first letter of specialty
       </div>
     </div>
   );

@@ -12,7 +12,11 @@ const symptomMap = {
   dizziness: 'Neurologist',
   toothache: 'Dentist',
   teeth: 'Dentist',
-  mouth: 'Dentist',
+  mouth: 'General Physician',
+  ulcer:'General Physician',
+  tooth: 'Dentist',
+  teethpain: 'Dentist',
+  toothpain: 'Dentist',
   gum: 'Dentist',
   eye: 'Ophthalmologist',
   eyes: 'Ophthalmologist',
@@ -31,14 +35,23 @@ const symptomMap = {
   jointpain: 'Orthopedist',
   arthritis: 'Orthopedist',
   bone: 'Orthopedist',
+  backpain: 'Orthopedist',
+  muscle: 'Orthopedist',
+  bloodpressure: 'Cardiologist',
+  hypertension: 'Cardiologist',
+  cholesterol: 'Cardiologist',
   diabetes: 'Endocrinologist',
   thyroid: 'Endocrinologist',
   depression: 'Psychiatrist',
   anxiety: 'Psychiatrist',
   homeopathy: 'Homeopath',
+  homeopath: 'Homeopath',
+
   ayurveda: 'Ayurveda',
+
   digestive: 'Gastroenterologist',
   stomach: 'Gastroenterologist',
+
   liver: 'Hepatologist',
   kidney: 'Nephrologist',
   ear: 'ENT Specialist',
@@ -183,7 +196,7 @@ const Chatbot = ({ doctors }) => {
         onClick={toggleChatbot}
         aria-label="Toggle Chatbot"
       >
-        💬
+        {isOpen ? '✕' : '💬'}
       </button>
     </div>
   );
